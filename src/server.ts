@@ -15,31 +15,34 @@ Good luck to the next one
    \___\___/\_,_|_||_\___/\_,_|_|_|_|  
                                        
 
-              17/11/2022
+              13/09/2024
 
 */
+import { Application } from "express";
 import "reflect-metadata";
-import express from "express";
-import connection from "./Model";
+import { useExpressServer } from "routing-controllers";
+import { parseTemplate } from "./config/template.engine";
+import { ErrorMiddleware } from "./middlewares/error.middleware";
 
 require("dotenv").config();
-var cors = require("cors");
+const express = require("express");
 
-const app = express();
-app.use(cors());
+const app: Application = express();
 
-app.use(express.json());
+app.engine("html", parseTemplate);
+app.set("views", __dirname + "/views"); // specify the views directory
+app.set("view engine", "html"); // register the template engine
+app.use(express.static("public"));
 
-const start = async (): Promise<void> => {
-    try {
-        await connection.sync({ alter: process.env.PROFILE === "dev" });
-        app.listen(process.env.SERVER_PORT, () => {
-            console.log("Server started on port 8080");
-        });
-    } catch (error) {
-        console.error(error);
-        process.exit(1);
-    }
-};
+useExpressServer(app, {
+    controllers: [__dirname + "/controllers/*.controller.ts"],
+    middlewares: [__dirname + "/middlewares/*.middleware.ts"],
+    defaultErrorHandler: false,
+});
 
-void start();
+try {
+    app.listen(process.env.APP_PORT);
+    console.log(`Server started on port ${process.env.APP_PORT}`);
+} catch (err: any) {
+    console.log(err);
+}

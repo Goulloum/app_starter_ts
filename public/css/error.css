@@ -1,0 +1,33 @@
+body {
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    min-height: 100vh;
+
+    .container {
+        width: 50%;
+        background-color: rgb(228, 228, 228);
+        padding: 2vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .status-code {
+            font-size: 3vw;
+            font-weight: bold;
+        }
+
+        .message {
+            font-size: 2vw;
+            color: rgb(255, 82, 82);
+            font-weight: bold;
+        }
+
+        .stack-trace {
+            width: 100%;
+            word-wrap: break-word;
+            font-size: 1.5vw;
+            margin-top: 2vh;
+        }
+    }
+}
