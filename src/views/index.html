@@ -6,6 +6,33 @@
         <title>Document</title>
     </head>
     <body>
-        Salut {{ mathieu }}
+        {% if name == 'mathieu' %}
+        <h1>Salut Mathieu</h1>
+        {% elseif name == 'barnabé' %}
+        <h1>Salut barnab</h1>
+        {% elseif name == 'goulloum' %}
+        <h1>merde ...</h1>
+        {% else %}
+        <h1>Salut inconnu</h1>
+        {% endif %}
+        <table>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Age</th>
+            </tr>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+
+                <td>
+                    {% if user.name == 'Jane' %}
+                    <strong>{{ user.name }}</strong>
+                    {% else %} {{ user.name }} {% endif %}
+                </td>
+                <td>{{ user.age }}</td>
+            </tr>
+            {% endfor %}
+        </table>
     </body>
 </html>

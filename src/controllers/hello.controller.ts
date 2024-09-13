@@ -9,6 +9,20 @@ export class HelloController {
         if (!name) {
             throw new NotFoundError("Name is required");
         }
-        return { name: name };
+        return {
+            name: name,
+            users: [
+                {
+                    id: 1,
+                    name: "John Doe",
+                    age: 25,
+                },
+                {
+                    id: 2,
+                    name: "Jane Doe",
+                    age: 24,
+                },
+            ],
+        };
     }
 }
